@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { portfolioData } from "../data/portofolioData.jsx";
-import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
+import ProjectsTab from "./Tabs/ProjectTabs.jsx";
+import CertificatesTab from "./Tabs/CertificatesTab.jsx";
+import TechStacksTab from "./Tabs/TechStacksTab.jsx";
 
 const Portfolio = () => {
     const [activeTab, setActiveTab] = useState("projects");
+    const [expandedProjectId, setExpandedProjectId] = useState(null);
+    const [overflowStates, setOverflowStates] = useState({});
+
+    useEffect(() => {
+        setExpandedProjectId(null);
+    }, [activeTab]);
 
     return (
         <section
@@ -35,17 +43,18 @@ const Portfolio = () => {
                     data-aos="fade-down"
                 >
                     {[
-                        { value: "projects", label: "Projects", icon: "bx bx-briefcase" },
-                        { value: "certificates", label: "Certificates", icon: "bx bx-award" },
-                        { value: "tech", label: "Tech Stack", icon: "bx bx-code-alt" },
+                        {value: "projects", label: "Projects", icon: "bx bx-briefcase"},
+                        {value: "certificates", label: "Certificates", icon: "bx bx-award"},
+                        {value: "tech", label: "Tech Stack", icon: "bx bx-code-alt"},
                     ].map((tab) => (
                         <button
                             key={tab.value}
                             onClick={() => setActiveTab(tab.value)}
-                            className={`flex items-center gap-2 px-5 py-3 rounded-lg shadow-lg text-sm font-medium transition-all ${activeTab === tab.value
+                            className={`flex items-center gap-2 px-5 py-3 rounded-lg shadow-lg text-sm font-medium transition-all ${
+                                activeTab === tab.value
                                     ? "bg-gray-800 text-white dark:bg-white dark:text-gray-800"
                                     : "bg-white text-gray-800 dark:bg-gray-800 dark:text-white border border-white"
-                                }`}
+                            }`}
                         >
                             <i className={tab.icon}></i>
                             {tab.label}
@@ -55,107 +64,25 @@ const Portfolio = () => {
 
                 {/* Tabs Content */}
                 <div>
-                    {/* Projects Tab */}
                     {activeTab === "projects" && (
-                        <div
-                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
-                            data-aos-delay="600"
-                            data-aos="fade-down"
-                        >
-                            {portfolioData.tabs.projects.map((project) => (
-                                <div
-                                    key={project.id}
-                                    className="bg-white dark:bg-gray-800 border border-white rounded-lg p-6 shadow-lg hover:-translate-y-1 transition-transform"
-                                >
-                                    <img
-                                        src={project.img}
-                                        alt={project.title}
-                                        className="w-full h-48 object-cover rounded-lg mb-4"
-                                    />
-                                    <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
-                                        {project.title}
-                                    </h3>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                                        {project.subtitle}
-                                    </p>
-                                    <p className="text-sm text-gray-800 dark:text-white mb-4">
-                                        {project.desc}
-                                    </p>
-                                    <div className="flex flex-wrap gap-2 mb-4">
-                                        {project.tags.map((tag, index) => (
-                                            <span
-                                                key={index}
-                                                className="px-2 py-1 bg-gray-200 dark:bg-gray-700 text-xs rounded-full text-gray-800 dark:text-white"
-                                            >
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-                                    <Tippy content="View Demo" placement="top">
-                                        <a
-                                            href={project.demo}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="inline-flex justify-center w-full items-center gap-2 px-4 py-2 bg-gray-800 text-white dark:bg-white dark:text-gray-800 rounded-lg font-medium transition-all hover:-translate-y-1"
-                                        >
-                                            <span className="flex items-center gap-1">
-                                                <span>Demo</span>
-                                                <i className="bx bx-link-external"></i>
-                                            </span>
-                                        </a>
-                                    </Tippy>
-
-                                </div>
-                            ))}
-                        </div>
+                        <ProjectsTab
+                            projects={portfolioData.tabs.projects}
+                            expandedProjectId={expandedProjectId}
+                            setExpandedProjectId={setExpandedProjectId}
+                            overflowStates={overflowStates}
+                            setOverflowStates={setOverflowStates}
+                        />
                     )}
 
-                    {/* Certificates Tab */}
                     {activeTab === "certificates" && (
-                        <div
-                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
-                            data-aos-delay="600"
-                            data-aos="fade-down"
-                        >
-                            {portfolioData.tabs.certificates.map((certificate) => (
-                                <div
-                                    key={certificate.id}
-                                    className="bg-white dark:bg-gray-800 border border-white rounded-lg shadow-lg hover:-translate-y-1 transition-transform overflow-hidden"
-                                >
-                                    <img
-                                        src={certificate.img}
-                                        alt={certificate.title}
-                                        className="w-full h-72 object-cover rounded-lg"
-                                    />
-                                </div>
-                            ))}
-                        </div>
+                        <CertificatesTab certificates={portfolioData.tabs.certificates}/>
                     )}
 
-                    {/* Tech Stack Tab */}
                     {activeTab === "tech" && (
-                        <div
-                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
-                            data-aos-delay="600"
-                            data-aos="fade-down"
-                        >
-                            {portfolioData.tabs.techStacks.map((tech) => (
-                                <div
-                                    key={tech.id}
-                                    className="bg-white dark:bg-gray-800 border border-white rounded-lg p-6 shadow-lg hover:-translate-y-1 transition-transform flex flex-col items-center justify-center gap-4"
-                                >
-                                    <i
-                                        className={`${tech.icon}  text-6xl`}
-                                        style={{ color: tech.color }}
-                                    ></i>
-                                    <span className="text-lg font-medium text-gray-800 dark:text-white">
-                                        {tech.label}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
+                        <TechStacksTab techStacks={portfolioData.tabs.techStacks}/>
                     )}
                 </div>
+
             </div>
         </section>
     );

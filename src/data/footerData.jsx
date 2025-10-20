@@ -1,6 +1,6 @@
 const footerData = {
     brand: {
-        name: "Hizkia Siahaan",
+        name: "Nguyen Tien Dat",
         icon: "bx bx-code-alt",
         description:
             "Frontend Developer specializing in UI/UX, modern web technologies, and building smooth digital experiences with clean code & creative flow.",
@@ -19,7 +19,7 @@ const footerData = {
     legalLinks: [
         { label: "Privacy Policy", href: "#privacy" },
         { label: "Terms of Use", href: "#terms" },
-        { label: "Sitemap", href: "#sitemap" },
+        { label: "Sitemap", href: "https://maps.app.goo.gl/FALHvwTDnH3zrfEd8" },
     ],
 
 
@@ -27,17 +27,17 @@ const footerData = {
         {
             label: "Facebook",
             icon: "bx bxl-facebook",
-            href: "https://wa.me/62XXXXXXXXXX"
+            href: "https://www.facebook.com/at.129516/"
         },
         {
             label: "Instagram",
             icon: "bx bxl-instagram",
-            href: "https://www.instagram.com/username"
+            href: "https://www.instagram.com/merlin_1204"
         },
         {
             label: "GitHub",
             icon: "bx bxl-github",
-            href: "https://github.com/Hizkia178"
+            href: "https://github.com/Datgau"
         }
     ],
 
@@ -48,7 +48,7 @@ const footerData = {
         buttonText: "Subscribe",
     },
 
-    copyright: "© 2025 Hizkia Siahaan. All rights reserved.",
+    copyright: "© 2025 Nguyen Tien Dat. All rights reserved.",
 };
 
 export default footerData;

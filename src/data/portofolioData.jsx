@@ -10,28 +10,28 @@ export const portfolioData = {
                 id: 1,
                 img: "/assets/project1.png",
                 title: "Shradha Book Store",
-                subtitle: "Static website for an energy stone shop.",
-                desc: "This was my first project when I was still in school. I spent three months learning and one month building this project. It marked my very first steps into my passion for programming.",
+                subtitle: "This is an online bookstore — powerful and smooth.",
+                desc: "This project features strong security, integrates online payment, order tracking, product reviews, and more. The admin panel provides revenue statistics, inventory management, and many other useful tools. It was one of the most interesting projects I built while still in school.",
                 demo: "#",
-                tags: ["Html","Css", "Bootstrap", "JavaScript" ]
+                tags: ["Asp .net api","React - TypeScript", "Sql Server", "Google Cloud Storage", "SePay", "Redis Cache","Jwt Authentication"]
             },
             {
                 id: 2,
                 img: "/assets/project2.png",
-                title: "Chatbot Assistant",
-                subtitle: "A chatbot that evolves with every conversation.",
-                desc: "This chatbot is a React-based assistant that learns from user input and stores knowledge using a simple Express + JSON backend. It’s designed to grow smarter over time and simulate natural, human-like dialogue. Ideal for basic AI training or personalized assistants.",
+                title: "Key Kiosk",
+                subtitle: "Admin project for online product key stores.",
+                desc: "This project focuses on managing orders, inventory, and product documents. Built with the powerful Java Spring Boot framework, it significantly improves performance, as well as data loading and storage efficiency in the database.",
                 demo: "#",
-                tags: ["React", "Express", "Node.js", "JSON"]
+                tags: ["React", "Java Springboot", "Node.js", "Sql Server"]
             },
             {
                 id: 3,
                 img: "/assets/project3.png",
                 title: "Personal Portfolio Website",
-                subtitle: "Your work deserves a beautiful showcase.",
-                desc: "A sleek and responsive personal portfolio built with Vite and Tailwind CSS. This site features categorized project sections, certificates, and a dynamic tech stack. Optimized for both desktop and mobile experiences, it reflects professional branding with clean code.",
+                subtitle: "Static website for an energy stone shop.",
+                desc: "This was my very first project during my time as a student. I spent three months learning programming fundamentals, exploring how the web works, and understanding the logic behind each line of code. After that, I devoted a full month to building this project completely from scratch. Every feature, every layout, and every bug taught me something new — not just about coding, but also about patience and problem-solving. It marks the first milestone in my journey and passion for software development, where I realized how powerful it feels to bring an idea to life through code.",
                 demo: "#",
-                tags: ["Vite", "React", "Tailwind CSS", "JavaScript"]
+                tags: ["Html", "Css", "Bootstrap", "JavaScript"]
             }
         ],
 

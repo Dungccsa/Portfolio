@@ -3,8 +3,8 @@ import { createClient } from "@supabase/supabase-js";
 import Swal from "sweetalert2";
 
 // Inisialisasi Supabase client
-const supabaseUrl = "https://yifexgkxhzlndrrdpnqh.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlpZmV4Z2t4aHpsbmRycmRwbnFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA5NDQ1NTAsImV4cCI6MjA2NjUyMDU1MH0.D-Y3Bbuqk5ZMdbDAeW0kvgs_44NxSGJmXePauhWY6vA";
+const supabaseUrl = "https://borrwidqszryjhzqxqyr.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvcnJ3aWRxc3pyeWpoenF4cXlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5NTg0MzcsImV4cCI6MjA3NjUzNDQzN30.Rf3vVx5iuJWWL8tLJSLR3nQtEdY46-ooBWH-VBxixqM";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const CustomModal = ({ isOpen, onClose, children }) => {
@@ -40,12 +40,12 @@ const Testimonials = () => {
         name: '',
         email: '',
         content: '',
-        position: ''
+        position: '',
+        rating: ''
     });
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Fetch testimonials dari Supabase saat komponen mount
     useEffect(() => {
         const fetchTestimonials = async () => {
             const { data, error } = await supabase
@@ -94,7 +94,7 @@ const Testimonials = () => {
         if (!formData.content.trim()) {
             newErrors.content = 'Testimonial is required';
         } else if (formData.content.trim().length < 10) {
-            newErrors.content = 'Testimonial must be at least 10 characters';
+            newErrors.content = 'Testimonial must be at least 100 characters';
         }
 
         if (!formData.position.trim()) {
@@ -120,7 +120,7 @@ const Testimonials = () => {
                 email: formData.email,
                 content: formData.content,
                 position: formData.position,
-                rating: 5,
+                rating: formData.rating,
                 avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(formData.name)}&background=1f2937&color=fff&size=100`
             }
         ]);
@@ -195,9 +195,9 @@ const Testimonials = () => {
                     </p>
                 </div>
 
-                {/* Testimonial Card */}
+                {/* Testimonial Tabs */}
                 <div className="bg-white dark:bg-gray-800 rounded-lg mb-10 shadow-lg border border-white dark:border-white max-w-4xl mx-auto" data-aos-delay="600" data-aos="fade-up">
-                    {/* Card Header */}
+                    {/* Tabs Header */}
                     <div className="flex justify-between items-center p-6 border-b border-gray-200 dark:border-gray-700">
                         <h3 className="text-xl font-semibold text-gray-800 dark:text-white flex items-center gap-2">
                             <i className="bx bx-comment-detail text-2xl" />
@@ -214,7 +214,7 @@ const Testimonials = () => {
                         </button>
                     </div>
 
-                    {/* Card Body (Scrollable) */}
+                    {/* Tabs Body (Scrollable) */}
                     <div className="max-h-[500px] overflow-y-auto scrollbar-hide p-6">
                         {testimonials.length > 0 ? (
                             <div className="space-y-6">
@@ -294,7 +294,7 @@ const Testimonials = () => {
                     </div>
 
                     <div className="grid gap-4">
-                        {/* Name Input */}
+                        {/* Full Name */}
                         <div>
                             <label className="block text-sm font-medium text-gray-800 dark:text-white mb-1">
                                 Full Name
@@ -308,8 +308,8 @@ const Testimonials = () => {
                                     onChange={handleInputChange}
                                     className={`w-full pl-10 pr-4 py-2 rounded-lg border ${
                                         errors.name
-                                            ? 'border-red-300 focus:border-red-500 focus:ring-red-200'
-                                            : 'border-gray-200 dark:border-gray-700 focus:border-gray-800 focus:ring-gray-800'
+                                            ? "border-red-300 focus:border-red-500 focus:ring-red-200"
+                                            : "border-gray-200 dark:border-gray-700 focus:border-gray-800 focus:ring-gray-800"
                                     } bg-white dark:bg-gray-800 text-gray-800 dark:text-white text-sm focus:outline-none focus:ring-1 transition-colors`}
                                     placeholder="Enter your full name"
                                 />
@@ -322,7 +322,7 @@ const Testimonials = () => {
                             )}
                         </div>
 
-                        {/* Email Input */}
+                        {/* Email */}
                         <div>
                             <label className="block text-sm font-medium text-gray-800 dark:text-white mb-1">
                                 Email
@@ -336,8 +336,8 @@ const Testimonials = () => {
                                     onChange={handleInputChange}
                                     className={`w-full pl-10 pr-4 py-2 rounded-lg border ${
                                         errors.email
-                                            ? 'border-red-300 focus:border-red-500 focus:ring-red-200'
-                                            : 'border-gray-200 dark:border-gray-700 focus:border-gray-800 focus:ring-gray-800'
+                                            ? "border-red-300 focus:border-red-500 focus:ring-red-200"
+                                            : "border-gray-200 dark:border-gray-700 focus:border-gray-800 focus:ring-gray-800"
                                     } bg-white dark:bg-gray-800 text-gray-800 dark:text-white text-sm focus:outline-none focus:ring-1 transition-colors`}
                                     placeholder="name@email.com"
                                 />
@@ -350,7 +350,7 @@ const Testimonials = () => {
                             )}
                         </div>
 
-                        {/* Position Input */}
+                        {/* Position */}
                         <div>
                             <label className="block text-sm font-medium text-gray-800 dark:text-white mb-1">
                                 Position
@@ -364,8 +364,8 @@ const Testimonials = () => {
                                     onChange={handleInputChange}
                                     className={`w-full pl-10 pr-4 py-2 rounded-lg border ${
                                         errors.position
-                                            ? 'border-red-300 focus:border-red-500 focus:ring-red-200'
-                                            : 'border-gray-200 dark:border-gray-700 focus:border-gray-800 focus:ring-gray-800'
+                                            ? "border-red-300 focus:border-red-500 focus:ring-red-200"
+                                            : "border-gray-200 dark:border-gray-700 focus:border-gray-800 focus:ring-gray-800"
                                     } bg-white dark:bg-gray-800 text-gray-800 dark:text-white text-sm focus:outline-none focus:ring-1 transition-colors`}
                                     placeholder="CEO, Developer, Designer, etc."
                                 />
@@ -378,7 +378,31 @@ const Testimonials = () => {
                             )}
                         </div>
 
-                        {/* Content Textarea */}
+                        {/* ⭐ Rating */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-800 dark:text-white mb-1">
+                                Rating
+                            </label>
+                            <div className="flex items-center gap-1">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                    <i
+                                        key={star}
+                                        className={`bx ${
+                                            formData.rating >= star ? "bxs-star text-yellow-400" : "bx-star text-gray-400"
+                                        } text-xl cursor-pointer transition-colors`}
+                                        onClick={() => setFormData({ ...formData, rating: star })}
+                                    />
+                                ))}
+                            </div>
+                            {errors.rating && (
+                                <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
+                                    <i className="bx bx-error-circle" />
+                                    {errors.rating}
+                                </p>
+                            )}
+                        </div>
+
+                        {/* Testimonial */}
                         <div>
                             <label className="block text-sm font-medium text-gray-800 dark:text-white mb-1">
                                 Testimonial
@@ -392,8 +416,8 @@ const Testimonials = () => {
                                     rows="4"
                                     className={`w-full pl-10 pr-4 py-2 rounded-lg border ${
                                         errors.content
-                                            ? 'border-red-300 focus:border-red-500 focus:ring-red-200'
-                                            : 'border-gray-200 dark:border-gray-700 focus:border-gray-800 focus:ring-gray-800'
+                                            ? "border-red-300 focus:border-red-500 focus:ring-red-200"
+                                            : "border-gray-200 dark:border-gray-700 focus:border-gray-800 focus:ring-gray-800"
                                     } bg-white dark:bg-gray-800 text-gray-800 dark:text-white text-sm focus:outline-none focus:ring-1 transition-colors resize-none`}
                                     placeholder="Share your experience..."
                                 />
@@ -423,21 +447,21 @@ const Testimonials = () => {
                             >
                                 {isSubmitting ? (
                                     <span className="flex items-center justify-center gap-2">
-                                        <i className="bx bx-loader-alt animate-spin" />
-                                        Submitting...
-                                    </span>
+              <i className="bx bx-loader-alt animate-spin" />
+              Submitting...
+            </span>
                                 ) : (
                                     <span className="flex items-center justify-center gap-2">
-                                        <i className="bx bx-send" />
-                                        Submit
-                                    </span>
+              <i className="bx bx-send" />
+              Submit
+            </span>
                                 )}
                             </button>
                         </div>
                     </div>
-                    </div>
-                </CustomModal>
-            </section>
+                </div>
+            </CustomModal>
+        </section>
     );
 };
 
