@@ -2,10 +2,47 @@ import { useState } from "react";
 import contactData from "../data/contactData.jsx";
 import Tippy from '@tippyjs/react';
 import Swal from 'sweetalert2';
+import {useEmailJS} from "../hooks/useEmailJs.jsx";
 
 const Contact = () => {
   const [activeTab, setActiveTab] = useState("contact");
+  const { sendEmail, loading } = useEmailJS();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+    const handleSubmit = async (e) => {
+      e.preventDefault();
 
+      if (!formData.name || !formData.email || !formData.message) {
+        Swal.fire({
+          title: "Missing Info ",
+          text: "Please fill in all fields before sending.",
+          icon: "warning",
+          confirmButtonColor: "#1F2937",
+        });
+        return;
+      }
+      const result = await sendEmail(formData);
+
+      if (result === "success") {
+        Swal.fire({
+          title: "Message Sent! ✉️",
+          text: "Thank you for reaching out! I'll get back to you as soon as possible. You’ll also receive a confirmation email in your inbox 💌",
+          icon: "success",
+          confirmButtonColor: "#1F2937",
+        });
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        Swal.fire({
+          title: "Oops 😢",
+          text: "Something went wrong while sending your message. Please try again later!",
+          icon: "error",
+          confirmButtonColor: "#1F2937",
+        });
+      }
+    };
   return (
     <section id="contact" className="min-h-screen pb-20 bg-white dark:bg-gray-800 pt-20" data-aos-duration="1000" data-aos="fade-down">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,77 +76,89 @@ const Contact = () => {
         {/* Tabs Content */}
         <div>
           {activeTab === "contact" && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8" data-aos-delay="600" data-aos="fade-down">
-              {/* Left Side: Social Links */}
-              <div className="grid gap-4 max-w-xl mx-auto lg:mx-0">
-                {contactData.socials.map((item, index) => (
-                  <a
-                    key={index}
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between gap-4 px-7 w-full  py-7 border border-white rounded-lg shadow-lg dark:bg-gray-800 text-gray-800 dark:text-white hover:shadow-lg hover:-translate-y-1 transition-all"
-                    aria-label={item.label}
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="w-14 h-14 flex items-center justify-center shadow-lg rounded-lg bg-gray-800 text-white dark:bg-white dark:text-gray-800 shrink-0">
-                        <i className={`${item.icon} text-xl`} />
-                      </div>
-                      <div className="flex flex-col overflow-hidden">
-                        <span className="font-semibold text-2xl leading-tight">{item.label}</span>
-                        <span className="text-sm text-gray-800 dark:text-white leading-snug">
+              <div
+                  className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+                  data-aos-delay="600"
+                  data-aos="fade-down"
+              >
+                <div className="grid gap-4 max-w-xl mx-auto lg:mx-0">
+                  {contactData.socials.map((item, index) => (
+                      <a
+                          key={index}
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-between gap-4 px-7 w-full py-7 border border-white rounded-lg shadow-lg dark:bg-gray-800 text-gray-800 dark:text-white hover:shadow-lg hover:-translate-y-1 transition-all"
+                          aria-label={item.label}
+                      >
+                        <div className="flex items-start gap-4">
+                          <div className="w-14 h-14 flex items-center justify-center shadow-lg rounded-lg bg-gray-800 text-white dark:bg-white dark:text-gray-800 shrink-0">
+                            <i className={`${item.icon} text-xl`} />
+                          </div>
+                          <div className="flex flex-col overflow-hidden">
+                        <span className="font-semibold text-2xl leading-tight">
+                          {item.label}
+                        </span>
+                            <span className="text-sm text-gray-800 dark:text-white leading-snug">
                           {item.description}
                         </span>
-                      </div>
-                    </div>
-                    <i className="bx bx-chevron-right text-2xl text-gray-800 dark:text-white" />
-                  </a>
-                ))}
-              </div>
+                          </div>
+                        </div>
+                        <i className="bx bx-chevron-right text-2xl text-gray-800 dark:text-white" />
+                      </a>
+                  ))}
+                </div>
 
-              {/* Right Side: Contact Form */}
-              <div className="rounded-lg py-12 px-7 shadow-lg border h-fit border-white max-w-xl w-full mx-auto lg:mx-0">
-                <h3 className="text-xl font-semibold mb-6 text-gray-800 dark:text-white flex items-center gap-2">
-                  <i className="bx bx-envelope text-lg" />
-                  Send Me a Message
-                </h3>
-                <form className="grid gap-4">
-                  <input
-                    type="text"
-                    placeholder="Your Name"
-                    className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gray-800"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Your Email"
-                    className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gray-800"
-                  />
-                  <textarea
-                    placeholder="Your Message"
-                    className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gray-800"
-                    rows="5"
-                  />
-                  <Tippy content="Send your message" placement="top">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        Swal.fire({
-                          title: "Message Sent! ✉️",
-                          text: "Thank you for reaching out. I’ll get back to you soon!",
-                          icon: "success",
-                          confirmButtonColor: "#1F2937",
-                          confirmButtonText: "Cool 😎",
-                        });
-                      }}
-                      className="px-4 py-3 bg-gray-800 text-white dark:bg-white dark:text-gray-800 rounded-lg font-medium flex items-center justify-center gap-2 transition-all transform hover:-translate-y-1"
-                    >
-                      Send
-                      <i className="bx bx-send text-[1.2rem] translate-y-[1px]" />
-                    </button>
-                  </Tippy>
-                </form>
+                {/* Right Side: Contact Form */}
+                <div className="rounded-lg py-12 px-7 shadow-lg border h-fit border-white max-w-xl w-full mx-auto lg:mx-0">
+                  <h3 className="text-xl font-semibold mb-6 text-gray-800 dark:text-white flex items-center gap-2">
+                    <i className="bx bx-envelope text-lg" />
+                    Send Me a Message
+                  </h3>
+                  <form className="grid gap-4" onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        placeholder="Your Name"
+                        value={formData.name}
+                        onChange={(e) =>
+                            setFormData({ ...formData, name: e.target.value })
+                        }
+                        required
+                        className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gray-800"
+                    />
+                    <input
+                        type="email"
+                        placeholder="Your Email"
+                        value={formData.email}
+                        onChange={(e) =>
+                            setFormData({ ...formData, email: e.target.value })
+                        }
+                        required
+                        className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gray-800"
+                    />
+                    <textarea
+                        placeholder="Your Message"
+                        value={formData.message}
+                        onChange={(e) =>
+                            setFormData({ ...formData, message: e.target.value })
+                        }
+                        required
+                        rows="5"
+                        className="p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-gray-800"
+                    />
+                    <Tippy content="Send your message" placement="top">
+                      <button
+                          type="submit"
+                          disabled={loading}
+                          className="px-4 py-3 bg-gray-800 text-white dark:bg-white dark:text-gray-800 rounded-lg font-medium flex items-center justify-center gap-2 transition-all transform hover:-translate-y-1"
+                      >
+                        {loading ? "Sending..." : "Send"}
+                        <i className="bx bx-send text-[1.2rem] translate-y-[1px]" />
+                      </button>
+                    </Tippy>
+                  </form>
+                </div>
               </div>
-            </div>
           )}
 
           {activeTab === "support" && (
@@ -139,9 +188,13 @@ const Contact = () => {
             </div>
           )}
         </div>
+
       </div>
     </section>
+
   );
+
 };
+
 
 export default Contact;

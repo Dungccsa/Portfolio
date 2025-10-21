@@ -64,10 +64,8 @@ const Navbar = () => {
         const newMode = !isDarkMode;
         setIsDarkMode(newMode);
         document.documentElement.classList.toggle("dark");
-
         localStorage.setItem("theme", newMode ? "dark" : "light");
     };
-
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
