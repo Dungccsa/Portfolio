@@ -72,7 +72,7 @@ const ProjectCard = ({ project, expandedProjectId, setExpandedProjectId, overflo
                     }
                     className="text-blue-600 dark:text-blue-400 text-sm mb-4 hover:underline"
                 >
-                    {isExpanded ? "Thu gọn" : "Xem thêm"}
+                    {isExpanded ? "Hide" : "More"}
                 </button>
             )}
 
